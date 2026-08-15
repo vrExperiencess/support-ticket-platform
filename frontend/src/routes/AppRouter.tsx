@@ -17,6 +17,9 @@ import TicketDetailPage from "../pages/tickets/TicketDetailPage";
 import TicketsPage from "../pages/tickets/TicketsPage";
 import UnauthorizedPage from "../pages/UnauthorizedPage";
 
+import UsersPage from "../pages/users/UsersPage";
+import UserDetailPage from "../pages/users/UserDetailPage";
+
 function getRouterBasename() {
   const base =
     import.meta.env.BASE_URL;
@@ -92,6 +95,27 @@ export default function AppRouter() {
             }
           />
 
+          {/* USERS */}
+
+          <Route
+            path="users"
+            element={
+              <ProtectedRoute permission="users.read">
+                <UsersPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="users/:id"
+            element={
+              <ProtectedRoute permission="users.read">
+                <UserDetailPage />
+              </ProtectedRoute>
+            }
+          />
+
+
           {/* FUTURE MODULES */}
 
           <Route
@@ -127,6 +151,8 @@ export default function AppRouter() {
               />
             }
           />
+
+          
 
           <Route
             path="unauthorized"

@@ -12,6 +12,7 @@ import {
 import { RoleEntity } from "../../roles/entities/role.entity";
 
 @Entity("users")
+@Index(["roleId"])
 export class UserEntity {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
@@ -22,10 +23,13 @@ export class UserEntity {
   })
   roleId!: string;
 
-  @ManyToOne(() => RoleEntity, (role) => role.users, {
-    nullable: false,
-    onDelete: "RESTRICT",
-  })
+  @ManyToOne(
+    () => RoleEntity,
+    {
+      nullable: false,
+      onDelete: "RESTRICT",
+    },
+  )
   @JoinColumn({
     name: "role_id",
   })
@@ -37,15 +41,16 @@ export class UserEntity {
   })
   name!: string;
 
-  @Index({
-    unique: true,
-  })
   @Column({
     type: "varchar",
     length: 255,
+    unique: true,
   })
   email!: string;
 
+  /*
+   * Nunca se devuelve este campo al frontend.
+   */
   @Column({
     name: "password_hash",
     type: "varchar",
@@ -53,6 +58,10 @@ export class UserEntity {
   })
   passwordHash!: string;
 
+  /*
+   * En lugar de eliminar usuarios históricamente
+   * relacionados con tickets, se desactivan.
+   */
   @Column({
     name: "is_active",
     type: "boolean",

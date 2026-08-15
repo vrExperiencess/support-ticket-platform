@@ -55,16 +55,16 @@ export const navigationRoutes:
       "tickets.create",
   },
 
-  {
-    id: "metrics",
-    path: "/metrics",
-    label: "Metrics",
-    description:
-      "Operational indicators",
-    icon: BarChart3,
-    permission:
-      "metrics.read",
-  },
+  // {
+  //   id: "metrics",
+  //   path: "/metrics",
+  //   label: "Metrics",
+  //   description:
+  //     "Operational indicators",
+  //   icon: BarChart3,
+  //   permission:
+  //     "metrics.read",
+  // },
 
   {
     id: "users",

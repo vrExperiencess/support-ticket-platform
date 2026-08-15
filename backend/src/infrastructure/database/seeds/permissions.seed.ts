@@ -30,13 +30,13 @@ export const PERMISSION_IDS = {
   CLIENTS_READ: "20000000-0000-4000-8000-00000000000e",
 
   METRICS_READ: "20000000-0000-4000-8000-00000000000f",
+
   TICKETS_OVERDUE_READ: "20000000-0000-4000-8000-000000000010",
+  TICKETS_STATUS_CHANGE_ANY:"20000000-0000-4000-8000-000000000011",
+  TICKETS_DELETE:"20000000-0000-4000-8000-000000000012",
 
-  TICKETS_STATUS_CHANGE_ANY:
-  "20000000-0000-4000-8000-000000000011",
-
-  TICKETS_DELETE:
-  "20000000-0000-4000-8000-000000000012",
+  USERS_CREATE:"20000000-0000-4000-8000-000000000101",
+  USERS_UPDATE:"20000000-0000-4000-8000-000000000102",
 } as const;
 
 export async function seedPermissions(
@@ -139,6 +139,16 @@ export async function seedPermissions(
         code:"tickets.delete",
         description:"Can soft-delete support tickets.",
     },
+    {
+      id:PERMISSION_IDS.USERS_CREATE,
+      code:"users.create",
+      description: "Can create system users.",
+    },
+    {
+      id:PERMISSION_IDS.USERS_UPDATE,
+      code:"users.update",
+      description:"Can update system users.",
+    },
   ];
 
   await permissionRepository.upsert(permissions, ["id"]);
@@ -165,6 +175,8 @@ export async function seedPermissions(
     PERMISSION_IDS.TICKETS_OVERDUE_READ,
     PERMISSION_IDS.TICKETS_STATUS_CHANGE_ANY,
     PERMISSION_IDS.TICKETS_DELETE,
+    PERMISSION_IDS.USERS_CREATE,
+    PERMISSION_IDS.USERS_UPDATE,
   ];
 
   const supervisorPermissions = [
