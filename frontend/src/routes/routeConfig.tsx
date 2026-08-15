@@ -3,7 +3,7 @@ import type {
 } from "lucide-react";
 
 import {
-  BarChart3,
+  //BarChart3,
   CircleUserRound,
   LayoutDashboard,
   PlusCircle,

@@ -45,12 +45,16 @@ export default function AppRouter() {
       }
     >
       <Routes>
+        {/* PUBLIC */}
+
         <Route
           path="/login"
           element={
             <LoginPage />
           }
         />
+
+        {/* AUTHENTICATED APPLICATION */}
 
         <Route
           element={
@@ -59,6 +63,8 @@ export default function AppRouter() {
             </ProtectedRoute>
           }
         >
+          {/* DASHBOARD */}
+
           <Route
             index
             element={
@@ -115,7 +121,6 @@ export default function AppRouter() {
             }
           />
 
-
           {/* FUTURE MODULES */}
 
           <Route
@@ -130,17 +135,7 @@ export default function AppRouter() {
             }
           />
 
-          <Route
-            path="users"
-            element={
-              <ProtectedRoute permission="users.read">
-                <PlaceholderPage
-                  title="Users"
-                  description="System users and role information."
-                />
-              </ProtectedRoute>
-            }
-          />
+          {/* PROFILE */}
 
           <Route
             path="profile"
@@ -152,7 +147,7 @@ export default function AppRouter() {
             }
           />
 
-          
+          {/* AUTHORIZATION */}
 
           <Route
             path="unauthorized"
@@ -161,6 +156,8 @@ export default function AppRouter() {
             }
           />
         </Route>
+
+        {/* FALLBACK */}
 
         <Route
           path="*"
