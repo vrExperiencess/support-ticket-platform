@@ -12,7 +12,7 @@ export const databaseConfig = (): TypeOrmModuleOptions => ({
 
   autoLoadEntities: true,
 
-  synchronize: true,
+  synchronize: false,
 
   logging: process.env.NODE_ENV === "development",
 });
