@@ -6,6 +6,16 @@ La aplicación permite gestionar tickets, usuarios, clientes, comentarios, asign
 
 ---
 
+## 🎥 Video demo
+
+A continuación puedes ver una demostración rápida del resultado final de la aplicación, incluyendo autenticación, dashboard, gestión de tickets y administración de usuarios.
+
+[![Support Ticket Platform - Video Demo](https://img.youtube.com/vi/p50pc3ORh8U/maxresdefault.jpg)](https://youtu.be/p50pc3ORh8U)
+
+▶️ **[Ver demostración en YouTube](https://youtu.be/p50pc3ORh8U)**
+
+---
+
 ## 1. Objetivo
 
 El objetivo de la solución es implementar un sistema de soporte en el cual diferentes perfiles puedan interactuar con los tickets de acuerdo con sus responsabilidades.
