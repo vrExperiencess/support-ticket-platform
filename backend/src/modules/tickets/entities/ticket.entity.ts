@@ -1,6 +1,7 @@
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   Index,
   JoinColumn,
@@ -11,6 +12,7 @@ import {
 
 import { ClientEntity } from "../../clients/entities/client.entity";
 import { UserEntity } from "../../users/entities/user.entity";
+
 import { TicketStatusEntity } from "./ticket-status.entity";
 import { TicketPriorityEntity } from "./ticket-priority.entity";
 
@@ -22,6 +24,10 @@ export class TicketEntity {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
+  /*
+   * CLIENT
+   */
+
   @Column({
     name: "client_id",
     type: "uuid",
@@ -32,8 +38,14 @@ export class TicketEntity {
     nullable: false,
     onDelete: "RESTRICT",
   })
-  @JoinColumn({ name: "client_id" })
+  @JoinColumn({
+    name: "client_id",
+  })
   client!: ClientEntity;
+
+  /*
+   * CREATOR
+   */
 
   @Column({
     name: "created_by_user_id",
@@ -45,8 +57,17 @@ export class TicketEntity {
     nullable: false,
     onDelete: "RESTRICT",
   })
-  @JoinColumn({ name: "created_by_user_id" })
+  @JoinColumn({
+    name: "created_by_user_id",
+  })
   createdByUser!: UserEntity;
+
+  /*
+   * CURRENT ASSIGNEE
+   *
+   * Puede ser null porque un ticket nuevo puede quedar
+   * pendiente de asignación.
+   */
 
   @Column({
     name: "assigned_to_user_id",
@@ -59,8 +80,17 @@ export class TicketEntity {
     nullable: true,
     onDelete: "SET NULL",
   })
-  @JoinColumn({ name: "assigned_to_user_id" })
+  @JoinColumn({
+    name: "assigned_to_user_id",
+  })
   assignedToUser!: UserEntity | null;
+
+  /*
+   * USER WHO RESOLVED THE TICKET
+   *
+   * Se conserva separado del agente actualmente asignado
+   * porque puede haber reasignaciones posteriores.
+   */
 
   @Column({
     name: "resolved_by_user_id",
@@ -73,8 +103,14 @@ export class TicketEntity {
     nullable: true,
     onDelete: "SET NULL",
   })
-  @JoinColumn({ name: "resolved_by_user_id" })
+  @JoinColumn({
+    name: "resolved_by_user_id",
+  })
   resolvedByUser!: UserEntity | null;
+
+  /*
+   * STATUS
+   */
 
   @Column({
     name: "status_id",
@@ -86,8 +122,14 @@ export class TicketEntity {
     nullable: false,
     onDelete: "RESTRICT",
   })
-  @JoinColumn({ name: "status_id" })
+  @JoinColumn({
+    name: "status_id",
+  })
   status!: TicketStatusEntity;
+
+  /*
+   * PRIORITY
+   */
 
   @Column({
     name: "priority_id",
@@ -99,8 +141,14 @@ export class TicketEntity {
     nullable: false,
     onDelete: "RESTRICT",
   })
-  @JoinColumn({ name: "priority_id" })
+  @JoinColumn({
+    name: "priority_id",
+  })
   priority!: TicketPriorityEntity;
+
+  /*
+   * CONTENT
+   */
 
   @Column({
     type: "varchar",
@@ -113,12 +161,20 @@ export class TicketEntity {
   })
   description!: string;
 
+  /*
+   * SLA / DEADLINE
+   */
+
   @Column({
     name: "due_at",
     type: "timestamptz",
     nullable: true,
   })
   dueAt!: Date | null;
+
+  /*
+   * TIMESTAMPS
+   */
 
   @CreateDateColumn({
     name: "created_at",
@@ -145,4 +201,33 @@ export class TicketEntity {
     nullable: true,
   })
   closedAt!: Date | null;
+
+  /*
+   * SOFT DELETE
+   *
+   * No eliminamos físicamente el ticket porque perderíamos
+   * comentarios, reasignaciones y trazabilidad.
+   */
+  @DeleteDateColumn({
+    name: "deleted_at",
+    type: "timestamptz",
+    nullable: true,
+  })
+  deletedAt!: Date | null;
+
+  @Column({
+    name: "deleted_by_user_id",
+    type: "uuid",
+    nullable: true,
+  })
+  deletedByUserId!: string | null;
+
+  @ManyToOne(() => UserEntity, {
+    nullable: true,
+    onDelete: "SET NULL",
+  })
+  @JoinColumn({
+    name: "deleted_by_user_id",
+  })
+  deletedByUser!: UserEntity | null;
 }

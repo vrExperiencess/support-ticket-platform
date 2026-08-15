@@ -9,9 +9,12 @@ import AppShell from "../components/layout/AppShell";
 
 import ProtectedRoute from "../guards/ProtectedRoute";
 
+import CreateTicketPage from "../pages/tickets/CreateTicketPage";
 import DashboardPage from "../pages/DashboardPage";
 import LoginPage from "../pages/LoginPage";
 import PlaceholderPage from "../pages/PlaceholderPage";
+import TicketDetailPage from "../pages/tickets/TicketDetailPage";
+import TicketsPage from "../pages/tickets/TicketsPage";
 import UnauthorizedPage from "../pages/UnauthorizedPage";
 
 function getRouterBasename() {
@@ -60,14 +63,13 @@ export default function AppRouter() {
             }
           />
 
+          {/* TICKETS */}
+
           <Route
             path="tickets"
             element={
               <ProtectedRoute permission="tickets.read">
-                <PlaceholderPage
-                  title="Tickets"
-                  description="Ticket list, filtering and operational management."
-                />
+                <TicketsPage />
               </ProtectedRoute>
             }
           />
@@ -76,13 +78,21 @@ export default function AppRouter() {
             path="tickets/new"
             element={
               <ProtectedRoute permission="tickets.create">
-                <PlaceholderPage
-                  title="Create ticket"
-                  description="Register a new support request."
-                />
+                <CreateTicketPage />
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="tickets/:id"
+            element={
+              <ProtectedRoute permission="tickets.read">
+                <TicketDetailPage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* FUTURE MODULES */}
 
           <Route
             path="metrics"

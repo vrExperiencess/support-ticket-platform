@@ -38,4 +38,39 @@ export class UsersService {
       },
     });
   }
+
+  async findActiveSupportAgentById(
+    id: string,
+    ): Promise<UserEntity | null> {
+    return this.userRepository.findOne({
+        where: {
+        id,
+        isActive: true,
+        role: {
+            code: "SUPPORT_AGENT",
+        },
+        },
+        relations: {
+        role: true,
+        },
+    });
+    }
+
+    async findActiveSupportAgents(): Promise<UserEntity[]> {
+    return this.userRepository.find({
+        where: {
+        isActive: true,
+        role: {
+            code: "SUPPORT_AGENT",
+        },
+        },
+        relations: {
+        role: true,
+        },
+        order: {
+        name: "ASC",
+        },
+    });
+    }
+
 }
